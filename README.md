@@ -36,6 +36,8 @@ make k8s-deploy
 make k8s-forward
 ```
 
+Access: <https://localhost:8443>
+
 ## Bonus - metrics server
 
 In order to gain more visibility into the app's performance, a simple metrics server is included.
