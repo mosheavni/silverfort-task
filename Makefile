@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all build run clean
 
 CONTAINER_NAME = silverfort-web
 IMAGE = silverfort-web:latest
@@ -14,3 +14,6 @@ run:
 		--hostname $(CONTAINER_NAME) \
 		-p 3000:3000 \
 		$(IMAGE)
+
+clean:
+	docker rm -f $(CONTAINER_NAME) || true
