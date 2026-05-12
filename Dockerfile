@@ -13,6 +13,6 @@ RUN mkdir -p /app/certs \
 
 USER appuser
 
-EXPOSE 3000
+EXPOSE 8443
 
 CMD ["python", "app.py"]

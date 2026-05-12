@@ -7,6 +7,6 @@ spec:
   selector:
     app: silverfort-web
   ports:
-    - port: 3000
-      targetPort: 3000
-      nodePort: 30000
+    - port: 443
+      targetPort: 8443
+      nodePort: 30443

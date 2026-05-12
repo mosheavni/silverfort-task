@@ -19,4 +19,12 @@ spec:
           image: silverfort-web:latest
           imagePullPolicy: Never
           ports:
-            - containerPort: 3000
+            - containerPort: 8443
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: silverfort-tls

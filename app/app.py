@@ -1,3 +1,4 @@
+import os
 import socket
 import time
 
@@ -6,6 +7,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+CERT_FILE = os.environ.get("CERT_FILE", "/app/certs/cert.pem")
+KEY_FILE = os.environ.get("KEY_FILE", "/app/certs/key.pem")
 _weather_cache: dict = {"temp": None, "ts": 0}
 CACHE_TTL = 60
 
@@ -44,4 +47,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=8443, ssl_context=(CERT_FILE, KEY_FILE))
