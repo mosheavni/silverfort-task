@@ -1,7 +1,8 @@
+import socket
 import time
 
 import requests
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -28,8 +29,18 @@ def get_tel_aviv_temp() -> str:
 
 @app.route("/")
 def index():
+    forwarded_for = request.headers.get("X-Forwarded-For", "")
+    client_ip = (
+        forwarded_for.split(",")[0].strip() if forwarded_for else request.remote_addr
+    )
+    container_name = socket.gethostname()
     temperature = get_tel_aviv_temp()
-    return f"<h1>Tel Aviv Weather: {temperature}</h1>"
+    return render_template(
+        "index.html",
+        client_ip=client_ip,
+        container_name=container_name,
+        temperature=temperature,
+    )
 
 
 if __name__ == "__main__":
