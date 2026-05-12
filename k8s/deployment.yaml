@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: silverfort-web
+  labels:
+    app: silverfort-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: silverfort-web
+  template:
+    metadata:
+      labels:
+        app: silverfort-web
+    spec:
+      containers:
+        - name: silverfort-web
+          image: silverfort-web:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
