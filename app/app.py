@@ -1,19 +1,29 @@
+import time
+
 import requests
 from flask import Flask
 
 app = Flask(__name__)
 
+_weather_cache: dict = {"temp": None, "ts": 0}
+CACHE_TTL = 60
+
 
 def get_tel_aviv_temp() -> str:
+    now = time.time()
+    if _weather_cache["temp"] and (now - _weather_cache["ts"]) < CACHE_TTL:
+        return _weather_cache["temp"]
     try:
         resp = requests.get(
             "https://wttr.in/Tel-Aviv?format=+%C+%t%20feels%20like%20+%f", timeout=5
         )
         resp.raise_for_status()
         temp = resp.text.strip()
+        _weather_cache["temp"] = temp
+        _weather_cache["ts"] = now
         return temp
     except Exception:
-        return "N/A"
+        return _weather_cache["temp"] or "N/A"
 
 
 @app.route("/")
